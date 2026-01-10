@@ -8,12 +8,23 @@ public static class Arrays
     /// <returns>array of doubles that are the multiples of the supplied number</returns>
     public static double[] MultiplesOf(double number, int length)
     {
+        // 1) Create a new array double with size = lenght. We will call it multiples.
+        // 2) For each position of i from 0 to lenght - 1,
+            // var i, will be the index of the list.
+            // append to list multiples with index i the value of number * (i + 1).
+        // 3) return the filled list.
+        
+        double[] multiples = new double[length];    // New list double
+        for (int i = 0; i < length; i++)            // loop 'lenght' amount of times.
+        {
+            multiples[i] = number * (i + 1);        // i is the index of the list, we assignd the value on each iteration.
+        }
         // TODO Problem 1 Start
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
 
-        return []; // replace this return statement with your own
+        return multiples; // replace this return statement with your own
     }
 
     /// <summary>
@@ -25,7 +36,21 @@ public static class Arrays
     /// </summary>
     public static void RotateListRight(List<int> data, int amount)
     {
-        // TODO Problem 2 Start
+        // 1) Get the amount of item in the list. n = data.Count.
+        // 2) Make sure amount is not = n, this will not perform a rotation.
+        // 3) Get the last 'amount' of elements from tail of list.
+        // 4) Remove the tail from the end.
+        // 5) Insert the tail elements at the beginning of the list.
+        // 6) List is rotated.
+        int n = data.Count;                 // Step 1.
+        amount = amount % n;        
+        if (amount == 0) return;            // Step 2.
+
+        List<int> tail = data.GetRange(n - amount, amount);     // Get the 'amount' elements from List tail.
+        data.RemoveRange(n - amount, amount);                   // Remove the tail elements from List.
+        data.InsertRange(0, tail);                              // Insert tail elements at index 0.
+
+        
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.

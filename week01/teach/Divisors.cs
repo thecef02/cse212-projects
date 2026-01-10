@@ -19,6 +19,13 @@ public static class Divisors {
     private static List<int> FindDivisors(int number) {
         List<int> results = new();
         // TODO problem 1
+          for (int i = 1; i < number; i++)
+        {
+            if ((num % 3) == 0)
+            {
+            results.add(i);
+            }
+        }
         return results;
     }
 }
