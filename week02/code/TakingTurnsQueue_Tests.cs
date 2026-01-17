@@ -11,7 +11,7 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Bob (2), Tim (5), Sue (3) and
     // run until the queue is empty
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
-    // Defect(s) Found: 
+    // Defect(s) Found: Function GetNextPerson() was not adding the person at the end of the queue, it was inserting it at the position 0. Use .add() or .insert(with the count of the queue to point the end of the queue)
     public void TestTakingTurnsQueue_FiniteRepetition()
     {
         var bob = new Person("Bob", 2);
@@ -32,8 +32,8 @@ public class TakingTurnsQueueTests
             {
                 Assert.Fail("Queue should have ran out of items by now.");
             }
-
             var person = players.GetNextPerson();
+
             Assert.AreEqual(expectedResult[i].Name, person.Name);
             i++;
         }
@@ -85,7 +85,7 @@ public class TakingTurnsQueueTests
     // Scenario: Create a queue with the following people and turns: Bob (2), Tim (Forever), Sue (3)
     // Run 10 times.
     // Expected Result: Bob, Tim, Sue, Bob, Tim, Sue, Tim, Sue, Tim, Tim
-    // Defect(s) Found: 
+    // Defect(s) Found: A person with a value of 0 or less was not added to the queue indefinitely.
     public void TestTakingTurnsQueue_ForeverZero()
     {
         var timTurns = 0;
