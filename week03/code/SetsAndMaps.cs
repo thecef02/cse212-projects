@@ -22,6 +22,22 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
+        var wordsSet = new hashset<string>(words);
+        var res = new List<string>();                   // returned list
+        foreach (var w in words)                        // look into each word of the list
+        {
+            string reverseWord = $"{w[1]}{w[0]}";       // reverse the word to see if there is already in the list
+            if (w[0] == w[1])                           // bypass cases like "aa", "bb", etc
+                continue;
+
+            if (wordsSet.contain(reverseWord)) 
+            {
+                //if (string.compare(w,reverseWord) < 0)
+                //{
+                    res.Add($"{w} & {reverseWord}");
+                //}
+            }
+        }
         return [];
     }
 
@@ -42,6 +58,12 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
+            var degreeName = fields[3];
+            if (degrees.ContainsKey(degreeName))
+                degrees[degreeName] += 1;
+            else
+                degrees[degreeName] = 1;
+
             // TODO Problem 2 - ADD YOUR CODE HERE
         }
 
@@ -66,6 +88,23 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
+        var w1 = word1.replace(" ", "");
+        w1 = w1.ToLower();
+        var w2 = word2.replace(" ", "");
+        w2 = w2.ToLower();
+        if(w2.length != w1.length)
+            return false;
+        if (w1 == w2)
+            return false;
+            
+        foreach(char c in w1)
+        {
+            if()
+        }
+
+
+
+
         // TODO Problem 3 - ADD YOUR CODE HERE
         return false;
     }
