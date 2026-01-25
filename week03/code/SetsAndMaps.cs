@@ -1,3 +1,5 @@
+using System.Diagnostics;
+using System.IO.Pipelines;
 using System.Text.Json;
 
 public static class SetsAndMaps
@@ -22,23 +24,23 @@ public static class SetsAndMaps
     public static string[] FindPairs(string[] words)
     {
         // TODO Problem 1 - ADD YOUR CODE HERE
-        var wordsSet = new hashset<string>(words);
+        var wordsSet = new HashSet<string>(words);
         var res = new List<string>();                   // returned list
         foreach (var w in words)                        // look into each word of the list
         {
-            string reverseWord = $"{w[1]}{w[0]}";       // reverse the word to see if there is already in the list
             if (w[0] == w[1])                           // bypass cases like "aa", "bb", etc
                 continue;
 
-            if (wordsSet.contain(reverseWord)) 
+            string reverseWord = $"{w[1]}{w[0]}";       // reverse the word to see if there is already in the list
+            if (wordsSet.Contains(reverseWord)) 
             {
-                //if (string.compare(w,reverseWord) < 0)
-                //{
+                if (string.Compare(w,reverseWord) < 0)
+                {
                     res.Add($"{w} & {reverseWord}");
-                //}
+                }
             }
         }
-        return [];
+        return res.ToArray();
     }
 
     /// <summary>
@@ -88,25 +90,35 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
-        var w1 = word1.replace(" ", "");
-        w1 = w1.ToLower();
-        var w2 = word2.replace(" ", "");
-        w2 = w2.ToLower();
-        if(w2.length != w1.length)
-            return false;
-        if (w1 == w2)
-            return false;
-            
+        var w1 = word1.Replace(" ", "").ToLower();
+        var w2 = word2.Replace(" ", "").ToLower();
+        if(w2.Length != w1.Length)  return false;
+        if (w1 == w2) return false;
+        
+        var amountOfLetters = new Dictionary<char, int>();      // We will save the nuember of aech letter in order to compare the amount of letters with w2.
         foreach(char c in w1)
         {
-            if()
+            //Console.WriteLine($"each char {c}");
+            if(amountOfLetters.ContainsKey(c))
+                amountOfLetters[c]++;                           //letter found, we count how many are.
+            else
+                amountOfLetters[c] = 1;
+        }
+
+        foreach(char c2 in w2)
+        {
+            if(!amountOfLetters.ContainsKey(c2) )               // Check if the letter in w1 is part of w2
+                return false;
+            amountOfLetters[c2]--;                              // we substract 1 per letter found on w2 until is 0, under 0 will return false
+            if (amountOfLetters[c2] < 0)
+                return false;
+            
         }
 
 
 
-
-        // TODO Problem 3 - ADD YOUR CODE HERE
-        return false;
+    
+        return true;
     }
 
     /// <summary>
@@ -140,6 +152,7 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
+
         return [];
     }
 }
