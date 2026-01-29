@@ -33,6 +33,18 @@ public class LinkedList : IEnumerable<int>
     public void InsertTail(int value)
     {
         // TODO Problem 1
+        // Create new node
+        Node newNode = new(value);
+        if (_tail == null) // lista vacía
+        {
+            _head = newNode;
+            _tail = newNode;
+        return;
+        }
+        newNode.Prev = _tail;
+        _tail.Next = newNode;
+        _tail = newNode;
+
     }
 
 
@@ -51,7 +63,7 @@ public class LinkedList : IEnumerable<int>
         }
         // If the list has more than one item in it, then only the head
         // will be affected.
-        else if (_head is not null)
+        else if (_head is not null)  
         {
             _head.Next!.Prev = null; // Disconnect the second node from the first node
             _head = _head.Next; // Update the head to point to the second node
@@ -65,6 +77,17 @@ public class LinkedList : IEnumerable<int>
     public void RemoveTail()
     {
         // TODO Problem 2
+        if (_tail == null) // Empty list?
+            return;        
+
+        if (_tail.Prev == null) // only nodo
+        {
+            _head = null;
+            _tail = null;
+            return;
+        }
+        _tail = _tail.Prev;  // there are more than 1 nodes.
+        _tail.Next = null;
     }
 
     /// <summary>
@@ -109,9 +132,22 @@ public class LinkedList : IEnumerable<int>
     public void Remove(int value)
     {
         // TODO Problem 3
+        Node? curr = _head;
+        if (_tail == null) // Empty list?
+            return; 
+        while (curr is not null)
+        {       
+            if (curr.Data == value)
+            {
+                curr.Next.Prev = curr.Prev;
+                curr.Prev.Next = curr.Next;
+            }
+        }
+
     }
 
     /// <summary>
+    /// 
     /// Search for all instances of 'oldValue' and replace the value to 'newValue'.
     /// </summary>
     public void Replace(int oldValue, int newValue)
