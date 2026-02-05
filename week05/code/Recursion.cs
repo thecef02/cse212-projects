@@ -1,4 +1,5 @@
 using System.Collections;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client.Payloads;
 
 public static class Recursion
 {
@@ -15,7 +16,9 @@ public static class Recursion
     public static int SumSquaresRecursive(int n)
     {
         // TODO Start Problem 1
-        return 0;
+        if (n <= 0)
+            return 0;
+        return (n * n) + SumSquaresRecursive(n-1);
     }
 
     /// <summary>
@@ -40,6 +43,20 @@ public static class Recursion
     public static void PermutationsChoose(List<string> results, string letters, int size, string word = "")
     {
         // TODO Start Problem 2
+        if (word.Length == size)                                // word with the max size
+        {
+            results.Add(word);
+            return;
+        }
+
+        for (int i = 0; i < letters.Length; i++)
+        {
+            char sel = letters[i];
+            string remainder = letters.Remove(i,1);
+            PermutationsChoose(results, remainder, size, word + sel);
+
+        }
+
     }
 
     /// <summary>
@@ -86,7 +103,16 @@ public static class Recursion
     /// </summary>
     public static decimal CountWaysToClimb(int s, Dictionary<int, decimal>? remember = null)
     {
-        // Base Cases
+        // TODO Start Problem 3
+
+        if (remember == null)
+        {
+            remember = new Dictionary<int, decimal>();
+        }
+        if (remember.ContainsKey(s))
+        {
+            return remember[s];
+        }
         if (s == 0)
             return 0;
         if (s == 1)
@@ -95,12 +121,13 @@ public static class Recursion
             return 2;
         if (s == 3)
             return 4;
-
-        // TODO Start Problem 3
-
-        // Solve using recursion
-        decimal ways = CountWaysToClimb(s - 1) + CountWaysToClimb(s - 2) + CountWaysToClimb(s - 3);
+       
+        decimal ways = CountWaysToClimb(s - 1, remember) + CountWaysToClimb(s - 2, remember) + CountWaysToClimb(s - 3, remember);
+        remember[s] = ways;
         return ways;
+
+
+
     }
 
     /// <summary>
@@ -119,7 +146,23 @@ public static class Recursion
     public static void WildcardBinary(string pattern, List<string> results)
     {
         // TODO Start Problem 4
+        int idx = pattern.IndexOf('*');
+        if (idx == -1)
+        {
+            results.Add(pattern);
+            return;
+        }
+        string start = pattern.Substring(0, idx);
+        string end   = pattern.Substring(idx+1);
+        WildcardBinary(start + "0" + end, results);
+        WildcardBinary(start + "1" + end, results);
+    
     }
+
+
+
+
+
 
     /// <summary>
     /// Use recursion to insert all paths that start at (0,0) and end at the
