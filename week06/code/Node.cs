@@ -51,29 +51,6 @@ public class Node
         {
             return Right is not null && Right.Contains(value);
         }        
-        // if (value < Data)
-        // {
-        //     // Check to the left
-        //     if (Left is null)
-        //     {
-        //         return false;
-        //     }
-
-        //     else
-        //         return Left.Contains(value);
-        // }
-        // if (value > Data)
-        // {
-        //     // Check to the right
-        //     if (Right is null)
-        //     {
-        //         return  false;
-        //     }
-
-        //     else
-        //         return Right.Contains(value);
-        // }
-        // return true;
     }
 
     public int GetHeight()
